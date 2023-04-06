@@ -163,7 +163,7 @@ Style: PlainBox
 	Element: Normal
 		Rect: [400,40][426,61]
 		Margin: 2
-		
+
 		Horizontal: Scaled
 		Vertical: Scaled
 
@@ -240,7 +240,7 @@ Style: PlainOverlay
 	Element: Normal
 		Rect: [400,40][426,61]
 		Margin: 2
-		
+
 		Horizontal: Scaled
 		Vertical: Scaled
 
@@ -258,7 +258,7 @@ Style: PlainOverlay
 	Element: Hovered
 		Rect: [400,40][426,61]
 		Margin: 2
-		
+
 		Horizontal: Scaled
 		Vertical: Scaled
 
@@ -279,7 +279,7 @@ Style: PlainOverlay
 Style: OverlayBox
 	Element: Normal
 		Inherit: Panel
-			
+
 Style: LightPanel
 	Element: Normal
 		Rect: [195,221][375,257]
@@ -395,7 +395,7 @@ Style: DownArrow
 Style: UpArrow
 	Element: Normal
 		Rect: [457,6][470,19]
-		
+
 Style: RightArrow
 	Element: Normal
 		Rect: [429,6][441,19]
@@ -864,14 +864,14 @@ Style: ScrollUp
 			OY1: +4
 			OX2: -4
 			OY2: -4
-	
+
 	Element: Hovered
 		Layer: ScrollButton, Hovered
 		Layer: UpArrow
 			OX1: +4
 			OY1: +4
 			OX2: -4
-			OY2: -4	
+			OY2: -4
 
 	Element: Active
 		Layer: ScrollButton, Active
@@ -1009,14 +1009,14 @@ Style: GameTab
 Style: GameTabClose
 	Element: Normal
 		Rect: [3,429][17,443]
-		
+
 	Element: Hovered
 		Rect: [17,429][31,443]
 
 	Element: Active
 		Rect: [32,429][46,443]
-		
-		
+
+
 Style: GameTabNew
 	Element: Normal
 		Rect: [138,350][169,369]
@@ -1027,22 +1027,22 @@ Style: GameTabNew
 		Rect: [106,350][136,369]
 		Margin: 9
 		Horizontal: Scaled
-		
+
 	Element: Active
 		Rect: [138,373][169,392]
 		Margin: 9
 		Horizontal: Scaled
-		
+
 Style: HomeIcon
 	Element: Normal
 		Rect: [105, 300][136, 319]
-		
+
 	Element: Hovered
 		Rect: [138, 300][169, 319]
-		
+
 	Element: Active
 		Rect: [105, 324][136,343]
-		
+
 Style: GoIcon
 	Element: Normal
 		Rect: [105,253][136,272]
@@ -1051,7 +1051,7 @@ Style: GoIcon
 		Rect: [138,253][169,272]
 
 	Element: Active
-		Rect: [105,277][136,296]		
+		Rect: [105,277][136,296]
 
 Style: GalaxyIcon
 	Element: Normal
@@ -1428,7 +1428,7 @@ Style: SystemPanel
 Style: PlanetBar
 	Element: Normal
 		Inherit: PlainBox
-			
+
 // }}}
 // {{{ Support Tab
 Style: GroupPanel

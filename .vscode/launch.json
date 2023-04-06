@@ -10,8 +10,8 @@
       "name": "Debug",
       "program": "${workspaceFolder}/bin/lin64/StarRuler2.bin",
       "args": [],
-      "cwd": "${workspaceFolder}"
-      // "preLaunchTask": "build"
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build"
     }
   ]
 }

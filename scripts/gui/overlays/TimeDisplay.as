@@ -8,7 +8,7 @@ import elements.MarkupTooltip;
 import tabs.Tab;
 import util.formatting;
 import timing;
-from tabs.tabbar import TAB_HEIGHT, GLOBAL_BAR_HEIGHT, ActiveTab;
+from tabs.tabbar import ActiveTab;
 
 class TimeDisplay : BaseGuiElement {
 	GuiSprite@ icon;
@@ -23,7 +23,7 @@ class TimeDisplay : BaseGuiElement {
 	GuiButton@ fastButton;
 
 	TimeDisplay() {
-		super(null, recti_area(-4,TAB_HEIGHT+GLOBAL_BAR_HEIGHT, 210, 30));
+		super(null, recti_area(-4, -4, 210, 30));
 		@icon = GuiSprite(this, recti_area(9,3, 24,24));
 		@text = GuiMarkupText(this, recti_area(35,6, 120,24));
 		setMarkupTooltip(icon, locale::TT_GAMETIME);
@@ -53,7 +53,7 @@ class TimeDisplay : BaseGuiElement {
 	}
 
 	void tick(double time) {
-		visible = (ActiveTab.category == TC_Galaxy) && ShowTimeDisplay;
+		visible = ShowTimeDisplay;
 
 		if(!mpClient && !mpServer && settings::bAutoPause) {
 			bool shouldAutoPause = ActiveTab.category != TC_Galaxy && ActiveTab.category != TC_Diplomacy;

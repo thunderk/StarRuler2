@@ -75,10 +75,6 @@ endif
 
 CXXFLAGS += -std=c++11
 CXXFLAGS += -DLIN_MODE -DGLIBCXX_USE_NANOSLEEP
-CXXFLAGS += -Wall -Wno-invalid-offsetof -Wno-switch -Wno-reorder
-CXXFLAGS += -Wno-unused-local-typedefs
-CXXFLAGS += -Wuninitialized -Wmaybe-uninitialized
-CXXFLAGS += -Werror=return-type
 CXXFLAGS += -I./source/game -I./source/angelscript/include
 CXXFLAGS += -I/usr/include/freetype2 -isystem./source/glfw/include
 CXXFLAGS += -I./source/sound/include
@@ -86,6 +82,11 @@ CXXFLAGS += -I./source/as_addons/include -I./source/os/include
 CXXFLAGS += -I./source/libircclient/include
 CXXFLAGS += -I./source/util/include -I./source/network/include
 CXXFLAGS += -I./source/rapidjson/include
+
+WARNFLAGS += -Wall -Wno-invalid-offsetof -Wno-switch -Wno-reorder
+WARNFLAGS += -Wno-unused-local-typedefs
+WARNFLAGS += -Wuninitialized -Wmaybe-uninitialized
+WARNFLAGS += -Werror=return-type
 
 NSTEAM=1
 CXXFLAGS += -DNSTEAM
@@ -326,7 +327,7 @@ $(OBJDIR)/%.d: $(SRCDIR)/%.cpp
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo $<
-	@$(CXX) $(CXXFLAGS) $< -c -o $@
+	@$(CXX) $(CXXFLAGS) $(WARNFLAGS) $< -c -o $@
 
 # Included libs
 $(OBJDIR)/libircclient.a: source/libircclient/src/*.c source/libircclient/include/*.h
@@ -340,6 +341,7 @@ $(OBJDIR)/lib%.a: source/%/source/*.cpp source/%/include/*.h
 #Complete binary compile
 $(BINDIR)/$(BIN): $(LIB_TARGETS) $(OBJ_FILES) $(LIB_FILES) $(COPY_LIBS)
 	@mkdir -p $(BINDIR)
+	@echo $@
 	@$(CXX) $(CXXFLAGS) $(OBJ_FILES) $(LIB_FILES) $(LIB_TARGETS) $(LDFLAGS) -o $@
 
 %.so:

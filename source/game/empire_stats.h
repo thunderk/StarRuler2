@@ -4,8 +4,8 @@
 unsigned getEmpireStatCount();
 
 std::string getEmpireStatName(unsigned id);
-unsigned getStatID(const std::string& name);
+unsigned getStatID(const std::string &name);
 bool statIsint(unsigned id);
 
 void clearEmpireStats();
-void loadEmpireStats(const std::string& filename);
+void loadEmpireStats(const std::string &filename);

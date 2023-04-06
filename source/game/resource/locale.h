@@ -7,14 +7,15 @@ namespace resource {
 
 class Locale {
 public:
-	umap<std::string, std::string*> localizations;
-	umap<std::string, std::string*> hashLocalizations;
+  umap<std::string, std::string *> localizations;
+  umap<std::string, std::string *> hashLocalizations;
 
-	void clear();
-	void load(const std::string& filename);
+  void clear();
+  void load(const std::string &filename);
 
-	std::string localize(const std::string& text, bool requireHash = false, bool doUnescape = true, bool doFormat = true);
-	~Locale();
+  std::string localize(const std::string &text, bool requireHash = false,
+                       bool doUnescape = true, bool doFormat = true);
+  ~Locale();
 };
 
-};
+}; // namespace resource

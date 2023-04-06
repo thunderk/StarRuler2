@@ -6,16 +6,16 @@ struct RenderState;
 };
 
 namespace scene {
-	
+
 class PlaneNode : public Node {
 public:
-	const render::RenderState* material;
-	float minRad, maxRad;
+  const render::RenderState *material;
+  float minRad, maxRad;
 
-	PlaneNode(const render::RenderState* material, double size);
+  PlaneNode(const render::RenderState *material, double size);
 
-	virtual bool preRender(render::RenderDriver& driver);
-	virtual void render(render::RenderDriver& driver);
+  virtual bool preRender(render::RenderDriver &driver);
+  virtual void render(render::RenderDriver &driver);
 };
 
-};
+}; // namespace scene

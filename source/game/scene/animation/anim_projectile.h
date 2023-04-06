@@ -4,24 +4,24 @@
 
 namespace scene {
 
-	class ProjectileAnim : public Animator {
-	public:
-		vec3d velocity;
+class ProjectileAnim : public Animator {
+public:
+  vec3d velocity;
 
-		void animate(Node* node);
+  void animate(Node *node);
 
-		ProjectileAnim(const vec3d& Velocity);
-	};
-
-	class BeamAnim : public Animator {
-		scene::Node* follow;
-		vec3d offset;
-		float length;
-	public:
-		void animate(Node* node);
-		BeamAnim(Node* Follow, vec3d Offset, float range);
-		~BeamAnim();
-	};
-
+  ProjectileAnim(const vec3d &Velocity);
 };
 
+class BeamAnim : public Animator {
+  scene::Node *follow;
+  vec3d offset;
+  float length;
+
+public:
+  void animate(Node *node);
+  BeamAnim(Node *Follow, vec3d Offset, float range);
+  ~BeamAnim();
+};
+
+}; // namespace scene

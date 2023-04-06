@@ -1,10 +1,10 @@
 #pragma once
 #include "threads.h"
+#include <functional>
 #include <network/message.h>
 #include <network/transport.h>
 #include <queue>
 #include <vector>
-#include <functional>
 
 namespace net {
 
@@ -17,38 +17,39 @@ namespace net {
 #endif
 
 class MessageHandler {
-	struct QueuedMessage {
-		Transport* transport;
-		Address addr;
-		Message* msg;
-	};
+  struct QueuedMessage {
+    Transport *transport;
+    Address addr;
+    Message *msg;
+  };
 
-	threads::Mutex queueMutex;
-	threads::Mutex transportMutex;
+  threads::Mutex queueMutex;
+  threads::Mutex transportMutex;
 
-	std::queue<QueuedMessage> messageQueue;
-	std::vector<Transport*> transports;
+  std::queue<QueuedMessage> messageQueue;
+  std::vector<Transport *> transports;
+
 public:
-	threads::Signal threadsRunning;
-	bool active;
+  threads::Signal threadsRunning;
+  bool active;
 
-	std::function<void(bool)> threadInit;
-	std::function<void(bool)> threadExit;
+  std::function<void(bool)> threadInit;
+  std::function<void(bool)> threadExit;
 
-	MessageHandler();
-	virtual ~MessageHandler();
+  MessageHandler();
+  virtual ~MessageHandler();
 
-	void addTransport(Transport* transport);
-	void clearTransports();
+  void addTransport(Transport *transport);
+  void clearTransports();
 
-	virtual void queueMessage(Transport* transport, Address addr, Message* msg);
-	virtual void handleMessage(Transport* transport, Address addr, Message* msg);
+  virtual void queueMessage(Transport *transport, Address addr, Message *msg);
+  virtual void handleMessage(Transport *transport, Address addr, Message *msg);
 
-	virtual bool queueTick();
-	virtual bool mainTick();
+  virtual bool queueTick();
+  virtual bool mainTick();
 
-	virtual void runThreads(int workerThreads = 4);
-	virtual void stop();
+  virtual void runThreads(int workerThreads = 4);
+  virtual void stop();
 };
-	
-};
+
+}; // namespace net

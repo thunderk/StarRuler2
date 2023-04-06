@@ -3,6 +3,6 @@
 
 namespace render {
 
-void loadMeshOGEX(const char* filename, Mesh& mesh);
+void loadMeshOGEX(const char *filename, Mesh &mesh);
 
 };

@@ -4,14 +4,13 @@
 
 namespace scene {
 
-	class LinearMotionAnim : public Animator {
-	public:
-		vec3d velocity;
+class LinearMotionAnim : public Animator {
+public:
+  vec3d velocity;
 
-		void animate(Node* node);
+  void animate(Node *node);
 
-		LinearMotionAnim(const vec3d& Velocity);
-	};
-
+  LinearMotionAnim(const vec3d &Velocity);
 };
 
+}; // namespace scene

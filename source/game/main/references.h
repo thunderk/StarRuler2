@@ -1,13 +1,13 @@
 #pragma once
-#include "render/driver.h"
-#include "render/camera.h"
-#include "resource/library.h"
-#include "scripts/manager.h"
-#include "os/driver.h"
 #include "mods/mod_manager.h"
+#include "os/driver.h"
 #include "profile/keybinds.h"
 #include "profile/settings.h"
+#include "render/camera.h"
+#include "render/driver.h"
+#include "resource/library.h"
 #include "resource/locale.h"
+#include "scripts/manager.h"
 
 class Universe;
 class NetworkManager;
@@ -15,53 +15,53 @@ class PhysicsWorld;
 class GamePlatform;
 
 namespace audio {
-	class ISoundDevice;
-	extern bool disableSFX;
-};
+class ISoundDevice;
+extern bool disableSFX;
+}; // namespace audio
 
 struct references {
-	os::OSDriver* driver;
+  os::OSDriver *driver;
 
-	resource::Library library;
+  resource::Library library;
 
-	NetworkManager* network;
+  NetworkManager *network;
 
-	GamePlatform* cloud;
+  GamePlatform *cloud;
 
-	render::RenderDriver* render;
-	scene::Node* scene;
+  render::RenderDriver *render;
+  scene::Node *scene;
 
-	audio::ISoundDevice* sound;
+  audio::ISoundDevice *sound;
 
-	Universe* universe;
+  Universe *universe;
 
-	PhysicsWorld* physics, *nodePhysics;
+  PhysicsWorld *physics, *nodePhysics;
 
-	resource::Locale locale;
+  resource::Locale locale;
 
-	mods::Manager mods;
+  mods::Manager mods;
 
-	profile::Keybinds keybinds;
-	struct {
-		profile::Settings mod;
-		profile::Settings engine;
-	} settings;
+  profile::Keybinds keybinds;
+  struct {
+    profile::Settings mod;
+    profile::Settings engine;
+  } settings;
 
-	struct {
-		scripts::Manager* server;
-		scripts::Manager* client;
-		scripts::Manager* menu;
-		scripts::Manager* cache_server;
-		scripts::Manager* cache_shadow;
-	} scripts;
+  struct {
+    scripts::Manager *server;
+    scripts::Manager *client;
+    scripts::Manager *menu;
+    scripts::Manager *cache_server;
+    scripts::Manager *cache_shadow;
+  } scripts;
 
-	struct {
-		asIScriptEngine* server;
-		asIScriptEngine* client;
-		asIScriptEngine* menu;
-	} engines;
+  struct {
+    asIScriptEngine *server;
+    asIScriptEngine *client;
+    asIScriptEngine *menu;
+  } engines;
 
-	references();
+  references();
 };
 
 extern references devices;

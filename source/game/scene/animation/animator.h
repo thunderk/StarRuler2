@@ -7,8 +7,7 @@ class Node;
 
 class Animator : public AtomicRefCounted {
 public:
-
-	virtual void animate(Node* node) = 0;
+  virtual void animate(Node *node) = 0;
 };
 
-};
+}; // namespace scene

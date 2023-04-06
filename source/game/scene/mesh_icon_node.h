@@ -5,26 +5,26 @@ namespace render {
 struct RenderState;
 class RenderMesh;
 class SpriteSheet;
-};
+}; // namespace render
 
 namespace scene {
-	
+
 class MeshIconNode : public Node {
 public:
-	static bool render3DIcons;
-	const render::RenderMesh* mesh;
-	const render::RenderState* material;
-	const render::SpriteSheet* iconSheet;
-	unsigned iconIndex;
+  static bool render3DIcons;
+  const render::RenderMesh *mesh;
+  const render::RenderState *material;
+  const render::SpriteSheet *iconSheet;
+  unsigned iconIndex;
 
-	MeshIconNode(
-		const render::RenderMesh* mesh, const render::RenderState* material,
-		const render::SpriteSheet* sheet, unsigned index);
+  MeshIconNode(const render::RenderMesh *mesh,
+               const render::RenderState *material,
+               const render::SpriteSheet *sheet, unsigned index);
 
-	bool preRender(render::RenderDriver& driver) override;
-	void render(render::RenderDriver& driver) override;
+  bool preRender(render::RenderDriver &driver) override;
+  void render(render::RenderDriver &driver) override;
 
-	NodeType getType() const override { return NT_MeshIconNode; };
+  NodeType getType() const override { return NT_MeshIconNode; };
 };
 
-};
+}; // namespace scene

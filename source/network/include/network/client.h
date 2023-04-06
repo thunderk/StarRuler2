@@ -1,8 +1,8 @@
 #pragma once
+#include <functional>
+#include <network/connection.h>
 #include <network/message.h>
 #include <network/message_handler.h>
-#include <network/connection.h>
-#include <functional>
 #include <unordered_map>
 
 namespace net {
@@ -18,46 +18,48 @@ struct LobbyPunchthrough;
 
 class Client : public MessageHandler {
 public:
-	typedef std::function<void(Client&,Message&)> clMessageHandler;
-	Address address;
-	bool established;
+  typedef std::function<void(Client &, Message &)> clMessageHandler;
+  Address address;
+  bool established;
 
-	std::string hostname;
-	bool hasConnection;
-	bool resolved;
+  std::string hostname;
+  bool hasConnection;
+  bool resolved;
 
-	//Connect to the server on address, if makeConnection is true,
-	//establish a connection, otherwise send only connectionless messages
-	Client(Address connectTo, bool makeConnection = true);
-	Client(const std::string& hostname, int port, bool makeConnection = true, AddressType type = AT_IPv4);
-	~Client();
+  // Connect to the server on address, if makeConnection is true,
+  // establish a connection, otherwise send only connectionless messages
+  Client(Address connectTo, bool makeConnection = true);
+  Client(const std::string &hostname, int port, bool makeConnection = true,
+         AddressType type = AT_IPv4);
+  ~Client();
 
-	//Handlers for any messages that are sent to this client
-	void resolve();
-	void handle(uint8_t type, clMessageHandler func);
-	void handleClear(uint8_t type);
+  // Handlers for any messages that are sent to this client
+  void resolve();
+  void handle(uint8_t type, clMessageHandler func);
+  void handleClear(uint8_t type);
 
-	//Send and get ping for the connection
-	void sendPing();
-	unsigned getLastPing();
+  // Send and get ping for the connection
+  void sendPing();
+  unsigned getLastPing();
 
-	//Shortcut for sending messages to the server
-	Client& operator<<(Message& msg);
-	Connection* getConnection();
+  // Shortcut for sending messages to the server
+  Client &operator<<(Message &msg);
+  Connection *getConnection();
 
-	//Overrides to add functionality to MessageHandler
-	virtual void handleMessage(Transport* transport, Address addr, Message* msg);
-	virtual bool mainTick();
-	virtual void stop();
+  // Overrides to add functionality to MessageHandler
+  virtual void handleMessage(Transport *transport, Address addr, Message *msg);
+  virtual bool mainTick();
+  virtual void stop();
+
 private:
-	threads::Mutex handlerMutex;
-	std::unordered_map<uint8_t, clMessageHandler> handlers;
+  threads::Mutex handlerMutex;
+  std::unordered_map<uint8_t, clMessageHandler> handlers;
 
-	Transport* trans;
-	Connection* conn;
+  Transport *trans;
+  Connection *conn;
 
-	friend LobbyHeartbeat;
-	friend LobbyPunchthrough;
+  friend LobbyHeartbeat;
+  friend LobbyPunchthrough;
 };
 
 /*
@@ -67,31 +69,33 @@ private:
  */
 class BroadcastClient : public MessageHandler {
 public:
-	typedef std::function<void(BroadcastClient&,Address,Message&)> bcMessageHandler;
-	
-	//Connect to the server on address, if makeConnection is true,
-	//establish a connection, otherwise send only connectionless messages
-	BroadcastClient(int Port, AddressType Type = AT_IPv4);
-	~BroadcastClient();
+  typedef std::function<void(BroadcastClient &, Address, Message &)>
+      bcMessageHandler;
 
-	//Handlers for any messages that are sent to this client
-	void handle(uint8_t type, bcMessageHandler func);
-	void handleClear(uint8_t type);
+  // Connect to the server on address, if makeConnection is true,
+  // establish a connection, otherwise send only connectionless messages
+  BroadcastClient(int Port, AddressType Type = AT_IPv4);
+  ~BroadcastClient();
 
-	//Send messages to an address over the transport
-	void send(Message& msg, Address addr);
+  // Handlers for any messages that are sent to this client
+  void handle(uint8_t type, bcMessageHandler func);
+  void handleClear(uint8_t type);
 
-	//Broadcast messages on the port
-	void broadcast(Message& msg);
+  // Send messages to an address over the transport
+  void send(Message &msg, Address addr);
 
-	//Overrides to add functionality to MessageHandler
-	virtual void handleMessage(Transport* transport, Address addr, Message* msg);
+  // Broadcast messages on the port
+  void broadcast(Message &msg);
+
+  // Overrides to add functionality to MessageHandler
+  virtual void handleMessage(Transport *transport, Address addr, Message *msg);
+
 private:
-	threads::Mutex handlerMutex;
-	std::unordered_map<uint8_t, bcMessageHandler> handlers;
+  threads::Mutex handlerMutex;
+  std::unordered_map<uint8_t, bcMessageHandler> handlers;
 
-	int port;
-	Transport trans;
+  int port;
+  Transport trans;
 };
-	
-};
+
+}; // namespace net

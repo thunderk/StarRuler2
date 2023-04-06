@@ -4,21 +4,21 @@
 namespace render {
 struct RenderState;
 class RenderMesh;
-};
+}; // namespace render
 
 namespace scene {
-	
+
 class MeshNode : public Node {
 public:
-	const render::RenderMesh* mesh;
-	const render::RenderState* material;
+  const render::RenderMesh *mesh;
+  const render::RenderState *material;
 
-	MeshNode(const render::RenderMesh* mesh, const render::RenderState* material);
+  MeshNode(const render::RenderMesh *mesh, const render::RenderState *material);
 
-	bool preRender(render::RenderDriver& driver) override;
-	void render(render::RenderDriver& driver) override;
+  bool preRender(render::RenderDriver &driver) override;
+  void render(render::RenderDriver &driver) override;
 
-	NodeType getType() const override { return NT_MeshNode; };
+  NodeType getType() const override { return NT_MeshNode; };
 };
 
-};
+}; // namespace scene

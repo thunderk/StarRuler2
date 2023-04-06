@@ -1,25 +1,24 @@
 #pragma once
-#include <vector>
 #include <string>
+#include <vector>
 
 class BBCode {
 public:
-	struct Tag {
-		int type;
-		int value;
-		std::string name;
-		std::string argument;
+  struct Tag {
+    int type;
+    int value;
+    std::string name;
+    std::string argument;
 
-		std::vector<Tag> contents;
+    std::vector<Tag> contents;
 
-		Tag() : type(0), value(0) {
-		}
-	};
+    Tag() : type(0), value(0) {}
+  };
 
-	Tag root;
-	void parse(const std::string& content);
-	void clear();
+  Tag root;
+  void parse(const std::string &content);
+  void clear();
 
-	BBCode();
-	~BBCode();
+  BBCode();
+  ~BBCode();
 };

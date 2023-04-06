@@ -5,12 +5,12 @@ namespace scene {
 
 class CullingNode : public Node {
 public:
-	CullingNode(vec3d position, double radius);
+  CullingNode(vec3d position, double radius);
 
-	bool preRender(render::RenderDriver& driver);
-	void render(render::RenderDriver& driver);
+  bool preRender(render::RenderDriver &driver);
+  void render(render::RenderDriver &driver);
 
-	NodeType getType() const override { return NT_Culling; };
+  NodeType getType() const override { return NT_Culling; };
 };
 
-};
+}; // namespace scene

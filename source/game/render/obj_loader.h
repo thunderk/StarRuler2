@@ -3,6 +3,6 @@
 
 namespace render {
 
-void loadMeshOBJ(const char* filename, Mesh& mesh);
+void loadMeshOBJ(const char *filename, Mesh &mesh);
 
 };

@@ -5,9 +5,9 @@ namespace scene {
 
 class NodeSyncAnimator : public Animator {
 public:
-	void animate(Node* node);
+  void animate(Node *node);
 
-	static NodeSyncAnimator* getSingleton();
+  static NodeSyncAnimator *getSingleton();
 };
 
-};
+}; // namespace scene

@@ -6,16 +6,19 @@ struct RenderState;
 };
 
 namespace scene {
-	class BeamNode : public Node {
-		const render::RenderState* material;
-	public:
-		float width, uvLength;
-		vec3d endPosition;
-		bool staticSize;
+class BeamNode : public Node {
+  const render::RenderState *material;
 
-		BeamNode(const render::RenderState* Material, float Width, const vec3d& startPoint, const vec3d& endPoint, bool StaticSize = false);
+public:
+  float width, uvLength;
+  vec3d endPosition;
+  bool staticSize;
 
-		bool preRender(render::RenderDriver& driver);
-		void render(render::RenderDriver& driver);
-	};
+  BeamNode(const render::RenderState *Material, float Width,
+           const vec3d &startPoint, const vec3d &endPoint,
+           bool StaticSize = false);
+
+  bool preRender(render::RenderDriver &driver);
+  void render(render::RenderDriver &driver);
 };
+}; // namespace scene

@@ -4,6 +4,6 @@ struct Mesh;
 
 namespace render {
 
-void loadMeshX(const char* filename, Mesh& mesh);
+void loadMeshX(const char *filename, Mesh &mesh);
 
 };

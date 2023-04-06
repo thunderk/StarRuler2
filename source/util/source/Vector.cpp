@@ -4,9 +4,9 @@
 namespace BiPatch {
 
 Vector Vector::normal() const {
-    Vector v1(*this);
-    v1.normalize();
-    return v1;
+  Vector v1(*this);
+  v1.normalize();
+  return v1;
 }
 
-};
+}; // namespace BiPatch

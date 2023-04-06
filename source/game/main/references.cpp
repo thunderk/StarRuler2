@@ -2,9 +2,9 @@
 
 references devices;
 
-references::references() : physics(nullptr), nodePhysics(nullptr), cloud(nullptr) {
-}
+references::references()
+    : physics(nullptr), nodePhysics(nullptr), cloud(nullptr) {}
 
 namespace audio {
-	bool disableSFX = false;
+bool disableSFX = false;
 };

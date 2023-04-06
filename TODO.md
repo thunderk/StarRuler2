@@ -15,4 +15,5 @@
 
 * Port to SDL
 * Add an emscripten build
+* Remove IRC dependency
 

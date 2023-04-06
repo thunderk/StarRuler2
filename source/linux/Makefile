@@ -124,12 +124,6 @@ LDFLAGS += -lvorbisfile
 
 LIB_FILES += $(LIBDIR)/libangelscript.a
 LIB_FILES += $(LIBDIR)/libglfw3.a
-LIB_FILES += $(LIBDIR)/libsound.a
-LIB_FILES += $(LIBDIR)/libas_addons.a
-LIB_FILES += $(LIBDIR)/libircclient.a
-LIB_FILES += $(LIBDIR)/libos.a
-LIB_FILES += $(LIBDIR)/libnetwork.a
-LIB_FILES += $(LIBDIR)/libutil.a
 
 NOCOPYLIBS=1
 ifndef NOCOPYLIBS
@@ -300,11 +294,20 @@ SOURCES = \
 	processing.cpp \
 	main.cpp
 
+LIB_NAMES = \
+	os \
+	sound \
+	as_addons \
+	ircclient \
+	network \
+	util
+LIB_TARGETS = $(addsuffix .a, $(addprefix $(OBJDIR)/lib, $(LIB_NAMES)))
+
 CPP_FILES = $(addprefix $(SRCDIR)/, $(SOURCES))
 OBJ_FILES = $(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))
 DEP_FILES = $(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.d))
 
-.PHONY: compile all master_server makelibs patcher version clean_angelscript angelscript clean_glfw glfw clean_sound sound clean_as_addons as_addons clean_libircclient libircclient clean_os os clean_util util clean_network network clean_code clean
+.PHONY: compile all master_server patcher version clean_angelscript angelscript clean_glfw glfw clean_code clean
 
 compile:
 all: compile master_server patcher
@@ -325,19 +328,19 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo $<
 	@$(CXX) $(CXXFLAGS) $< -c -o $@
 
-#Complete binary compile
-$(BINDIR)/$(BIN): makelibs $(OBJ_FILES) $(LIB_FILES) $(COPY_LIBS)
+# Included libs
+$(OBJDIR)/libircclient.a: source/libircclient/src/*.c source/libircclient/include/*.h
 	@mkdir -p $(BINDIR)
-	@$(CXX) $(CXXFLAGS) $(OBJ_FILES) $(LIB_FILES) $(LDFLAGS) -o $@
+	@$(MAKE) -s -f source/libircclient/gcc/Makefile compile
 
-makelibs:
+$(OBJDIR)/lib%.a: source/%/source/*.cpp source/%/include/*.h
 	@mkdir -p $(BINDIR)
-	@$(MAKE) -s -f ./source/os/gcc/Makefile compile
-	@$(MAKE) -s -f ./source/sound/gcc/Makefile compile
-	@$(MAKE) -s -f ./source/as_addons/gcc/Makefile compile
-	@$(MAKE) -s -f ./source/libircclient/gcc/Makefile compile
-	@$(MAKE) -s -f ./source/network/gcc/Makefile compile
-	@$(MAKE) -s -f ./source/util/gcc/Makefile compile
+	@$(MAKE) -s -f source/$*/gcc/Makefile compile
+
+#Complete binary compile
+$(BINDIR)/$(BIN): $(LIB_TARGETS) $(OBJ_FILES) $(LIB_FILES) $(COPY_LIBS)
+	@mkdir -p $(BINDIR)
+	@$(CXX) $(CXXFLAGS) $(OBJ_FILES) $(LIB_FILES) $(LIB_TARGETS) $(LDFLAGS) -o $@
 
 %.so:
 	@cp "$$(realpath $$(gcc $(ARCHFLAGS) $(LDFLAGS) --print-file-name=$@))" "$(BINDIR)/$@"
@@ -366,24 +369,6 @@ $(LIBDIR)/libglfw3.a:
 #$(LIBDIR)/libbreakpad_client.a:
 	#./source/linux/build.sh $(ARCH) $(BUILDTYPE) breakpad
 
-$(LIBDIR)/libsound.a:
-	$(MAKE) -f ./source/sound/gcc/Makefile compile
-
-$(LIBDIR)/libas_addons.a:
-	$(MAKE) -f ./source/as_addons/gcc/Makefile compile
-
-$(LIBDIR)/libircclient.a:
-	$(MAKE) -f ./source/libircclient/gcc/Makefile compile
-
-$(LIBDIR)/libnetwork.a:
-	$(MAKE) -f ./source/network/gcc/Makefile compile
-
-$(LIBDIR)/libos.a:
-	$(MAKE) -f ./source/os/gcc/Makefile compile
-
-$(LIBDIR)/libutil.a:
-	$(MAKE) -f ./source/util/gcc/Makefile compile
-
 #Explicit rebuilds
 clean_angelscript:
 	rm -f $(LIBDIR)/libangelscript.a
@@ -400,36 +385,6 @@ glfw:
 #breakpad:
 	#./source/linux/build.sh $(ARCH) $(BUILDTYPE) breakpad
 
-clean_sound:
-	rm -f $(LIBDIR)/libsound.a
-sound:
-	$(MAKE) -f ./source/sound/gcc/Makefile compile
-
-clean_as_addons:
-	rm -f $(LIBDIR)/libas_addons.a
-as_addons:
-	$(MAKE) -f ./source/as_addons/gcc/Makefile compile
-
-clean_libircclient:
-	rm -f $(LIBDIR)/libircclient.a
-libircclient:
-	$(MAKE) -f ./source/libircclient/gcc/Makefile compile
-
-clean_os:
-	rm -f $(LIBDIR)/libos.a
-os:
-	$(MAKE) -f ./source/os/gcc/Makefile compile
-
-clean_util:
-	rm -f $(LIBDIR)/libutil.a
-util:
-	$(MAKE) -f ./source/util/gcc/Makefile compile
-
-clean_network:
-	rm -f $(LIBDIR)/libnetwork.a
-network:
-	$(MAKE) -f ./source/network/gcc/Makefile compile
-
 clean_code:
 	@find $(OBJDIR) -iname *.o -delete
 	@find $(OBJDIR) -iname *.d -delete
@@ -438,3 +393,5 @@ clean_code:
 clean:
 	@rm -rf $(OBJDIR)
 	@rm -f ./.depend
+
+.SILENT:

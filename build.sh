@@ -1,2 +1,2 @@
 #!/bin/sh
-make -f source/linux/Makefile compile
+make -f source/linux/Makefile -j4 compile

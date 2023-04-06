@@ -2,7 +2,7 @@ vec2i prev_size;
 const vec2i min_resolution(1280, 720);
 const double[] ui_zoom_factors = {0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0};
 const int ui_default_zoom_index = 5;
-int ui_zoom_index = ui_default_zoom_index;
+int ui_zoom_index = (ui_zoom_factors.find(uiScale) >= 0) ? ui_zoom_factors.find(uiScale) : ui_default_zoom_index;
 bool canZoom = true;
 
 int get_max_zoom_index() {
@@ -15,14 +15,20 @@ int get_max_zoom_index() {
 	return ui_zoom_factors.length - 1;
 }
 
+void ui_zoom_set(int index) {
+	ui_zoom_index = index;
+	uiScale = ui_zoom_factors[ui_zoom_index];
+	setSettingDouble("dGUIScale", uiScale);
+	saveSettings();
+}
+
 void ui_zoom_in(bool pressed) {
 	if(!pressed) {
 		if(!canZoom)
 			return;
 		if(ui_zoom_index >= max_zoom_index)
 			return;
-		ui_zoom_index += 1;
-		uiScale = ui_zoom_factors[ui_zoom_index];
+		ui_zoom_set(ui_zoom_index + 1);
 	}
 }
 
@@ -32,15 +38,13 @@ void ui_zoom_out(bool pressed) {
 			return;
 		if(ui_zoom_index == 0)
 			return;
-		ui_zoom_index -= 1;
-		uiScale = ui_zoom_factors[ui_zoom_index];
+		ui_zoom_set(ui_zoom_index - 1);
 	}
 }
 
 void ui_zoom_reset(bool pressed) {
 	if(!pressed) {
-		ui_zoom_index = ui_default_zoom_index;
-		uiScale = ui_zoom_factors[ui_zoom_index];
+		ui_zoom_set(ui_default_zoom_index);
 	}
 }
 

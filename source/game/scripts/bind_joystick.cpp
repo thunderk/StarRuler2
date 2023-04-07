@@ -2,12 +2,10 @@
 #include <Windows.h>
 #include <XInput.h>
 #endif
-#include "GLFW/glfw3.h"
 #include "binds.h"
 
 #define JOY_AXIS_MAX 16
 #define JOY_BUTTON_MAX 64
-#define GLFW_DEADZONE 0.1
 
 #ifdef _WIN32
 
@@ -80,14 +78,10 @@ struct XInputLibrary {
 
 namespace scripts {
 
-enum JoystickButtonState {
-  JBS_Off = GLFW_RELEASE,
-  JBS_On = GLFW_PRESS,
-  JBS_Released,
-  JBS_Pressed
-};
+enum JoystickButtonState { JBS_Off, JBS_On, JBS_Released, JBS_Pressed };
 
 // TODO: This should go through a driver, not directly glfw
+#if 0
 class Joystick {
 public:
   bool isXInput;
@@ -357,6 +351,42 @@ public:
     }
 #endif
   }
+
+  static void construct(void *memory, unsigned index) {
+    new (memory) Joystick(index);
+  }
+};
+#endif
+
+class Joystick {
+public:
+  bool isXInput;
+  int index;
+
+  unsigned axisCount;
+  float axes[JOY_AXIS_MAX];
+
+  unsigned buttonCount;
+  unsigned char buttons[JOY_BUTTON_MAX];
+
+  Joystick(unsigned Index)
+      : axisCount(0), axes(), buttonCount(0), buttons(), isXInput(false) {
+    if (Index >= 1 && Index <= 16)
+      index = (int)Index - 1;
+    poll();
+  }
+
+  bool poll() { return false; }
+
+  float getAxis(unsigned axis) const { return 0; }
+
+  unsigned char getButton(unsigned id) const { return JBS_Off; }
+
+  bool getPressed(unsigned id) const { return false; }
+
+  bool connected() const { return false; }
+
+  void setVibration(float lowFreq, float hiFreq) {}
 
   static void construct(void *memory, unsigned index) {
     new (memory) Joystick(index);

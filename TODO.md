@@ -2,6 +2,8 @@
 
 ## Fixes
 
+- Restore joystick binds by moving associated code to driver
+
 ## QoL
 
 - Apply scaling factor by properly re-rendering instead of linear rescaling

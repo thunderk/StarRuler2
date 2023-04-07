@@ -76,7 +76,7 @@ endif
 CXXFLAGS += -std=c++11
 CXXFLAGS += -DLIN_MODE -DGLIBCXX_USE_NANOSLEEP
 CXXFLAGS += -I./source/game -I./source/angelscript/include
-CXXFLAGS += -I/usr/include/freetype2 -isystem./source/glfw/include
+CXXFLAGS += -I/usr/include/freetype2
 CXXFLAGS += -I./source/sound/include
 CXXFLAGS += -I./source/as_addons/include -I./source/os/include
 CXXFLAGS += -I./source/libircclient/include
@@ -124,7 +124,6 @@ LDFLAGS += -lm -lfreetype
 LDFLAGS += -lvorbisfile
 
 LIB_FILES += $(LIBDIR)/libangelscript.a
-LIB_FILES += $(LIBDIR)/libglfw3.a
 
 NOCOPYLIBS=1
 ifndef NOCOPYLIBS
@@ -191,8 +190,6 @@ SOURCES = \
 	obj/obj_group.cpp \
 	obj/universe.cpp \
 	obj/object_saving.cpp \
-	\
-	os/glfw_driver.cpp \
 	\
 	physics/physics_world.cpp \
 	\
@@ -303,6 +300,15 @@ LIB_NAMES = \
 	network \
 	util
 LIB_TARGETS = $(addsuffix .a, $(addprefix $(OBJDIR)/lib, $(LIB_NAMES)))
+
+ifdef USE_SDL
+	CXXFLAGS += -DUSE_SDL
+	SOURCES += os/sdl_driver.cpp
+else
+	CXXFLAGS += -DUSE_GLFW -isystem./source/glfw/include
+	SOURCES += os/glfw_driver.cpp
+	LIB_FILES += $(LIBDIR)/libglfw3.a
+endif
 
 CPP_FILES = $(addprefix $(SRCDIR)/, $(SOURCES))
 OBJ_FILES = $(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))

@@ -21,7 +21,11 @@
 #include "network/network_manager.h"
 #include "obj/lock.h"
 #include "obj/universe.h"
+#ifdef USE_SDL
+#include "os/sdl_driver.h"
+#else
 #include "os/glfw_driver.h"
+#endif
 #include "physics/physics_world.h"
 #include "processing.h"
 #include "render/gl_driver.h"
@@ -267,7 +271,11 @@ bool initGlobal(bool loadGraphics, bool createWindow) {
   asPrepareMultithread();
 
   print("Initializing window system");
+#ifdef USE_SDL
+  devices.driver = os::getSDLDriver();
+#else
   devices.driver = os::getGLFWDriver();
+#endif
   devices.driver->resetTimer();
 
   // Load engine settings

@@ -6,7 +6,7 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "./build.sh"
+      "command": "make -j4 DEBUG=1 USE_SDL=1"
     }
   ]
 }

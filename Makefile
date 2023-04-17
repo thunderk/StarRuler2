@@ -26,6 +26,7 @@ else
 	BINDIR = bin/$(OSNAME)$(ARCH)
 	OBJDIR = obj/$(OSNAME)$(ARCH)
 	LIBDIR = obj/$(OSNAME)$(ARCH)
+
 	BUILDTYPE = release
 	OPTFLAGS = -Ofast
 	CXXFLAGS += $(OPTFLAGS)
@@ -314,7 +315,7 @@ CPP_FILES = $(addprefix $(SRCDIR)/, $(SOURCES))
 OBJ_FILES = $(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))
 DEP_FILES = $(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.d))
 
-.PHONY: compile all master_server patcher version clean_angelscript angelscript clean_glfw glfw clean_code clean
+.PHONY: compile all master_server patcher version clean_angelscript angelscript clean_glfw glfw clean_code clean run
 
 compile:
 all: compile master_server patcher
@@ -401,5 +402,8 @@ clean_code:
 clean:
 	@rm -rf $(OBJDIR)
 	@rm -f ./.depend
+
+run: $(BINDIR)/$(BIN)
+	$^
 
 .SILENT:

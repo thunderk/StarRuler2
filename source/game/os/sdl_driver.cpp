@@ -1,4 +1,5 @@
 #include "os/sdl_driver.h"
+#include <random>
 #include <string>
 #include <vector>
 
@@ -13,7 +14,12 @@ public:
 
   ~SDLDriver() {}
 
-  bool systemRandom(unsigned char *buffer, unsigned bytes) { return false; }
+  bool systemRandom(unsigned char *buffer, unsigned bytes) {
+    std::random_device rd;
+    for (unsigned i = 0; i < bytes; ++i)
+      buffer[i] = (unsigned char)rd();
+    return true;
+  }
 
   void setVerticalSync(int waitFrames) {}
 
